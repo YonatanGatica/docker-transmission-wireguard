@@ -75,3 +75,12 @@ Container images are configured using parameters passed at runtime (such as thos
 -v /downloads	                                Local path for downloads.
 -v /watch	                                    Watch folder for torrent files.
 -v /etc/wireguard                             location of wireguard config file
+
+
+# Docker file
+to be able to reach trasnmission from local network something simialr to the following needs to be added to wireguard config file:
+
+PostUp = DROUTE=$(ip route | grep default | awk '{print $3}'); HOMENET=192.168.0.1/24; ip route add $HOMENET via $DROUTE;iptables -I OUTPUT -d $HOMENET -j ACCEPT;  iptables -A OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT
+PreDown = HOMENET=192.168.0.1/24; ip route del $HOMENET via $DROUTE; iptables -D OUTPUT ! -o %i -m mark ! --mark $(wg show %i fwmark) -m addrtype ! --dst-type LOCAL -j REJECT; iptables -D OUTPUT -d $HOMENET -j ACCEPT
+
+where 192.168.0.1/24 is exchanged for your LAN adress, from your router. 
