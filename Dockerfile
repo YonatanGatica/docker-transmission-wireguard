@@ -1,10 +1,10 @@
-FROM linuxserver/transmission:version-3.00-r0
+FROM linuxserver/transmission:latest
 
 # set version label
 ARG BUILD_DATE
 ARG VERSION
 LABEL build_version="version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="antartica"
+LABEL maintainer="YonatanGatica@gmail.com"
 
 RUN \
  echo "**** install packages ****" && \
@@ -17,5 +17,5 @@ RUN \
 COPY root/ /
 
 # ports and volumes
-EXPOSE 9091 51413 
+EXPOSE 9091
 VOLUME /config /downloads /watch
