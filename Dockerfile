@@ -4,7 +4,7 @@ FROM linuxserver/transmission:latest
 ARG BUILD_DATE
 ARG VERSION
 LABEL build_version="version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="YonatanGatica@gmail.com"
+LABEL maintainer="antartica"
 
 RUN \
  echo "**** install packages ****" && \
